@@ -28,7 +28,7 @@ static bool touchType(effect_params_t* params) {
 
         HSV hsv = {
             hue_per_key[i],
-            i < 13 ? 0 : rgb_matrix_get_sat(),
+            i < 13 ? 0 : 255,
             rgb_matrix_get_val()
         };
 
