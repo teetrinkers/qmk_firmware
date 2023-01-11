@@ -87,7 +87,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         if (i == default_layer_index) {
             hsv = (HSV) { HSV_CYAN };
         } else if (i > 0 && layer_state_is(i)) {
-            hsv = (HSV) { HSV_CYAN };
+            hsv = (HSV) { HSV_RED };
         } else {
             hsv = (HSV) { HSV_OFF };
         }
