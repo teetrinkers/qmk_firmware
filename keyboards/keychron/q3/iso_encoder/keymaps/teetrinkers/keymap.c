@@ -74,7 +74,7 @@ void keyboard_post_init_user(void) {
     // debug_mouse = true;
 }
 
-// Indicate active layers using LEDs on F1-F4.
+// Indicate function layer using caps lock led.
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     // dprintf("layer_state: %08X(%u)\n", layer_state, get_highest_layer(layer_state));
 
@@ -84,17 +84,20 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     uint8_t default_layer_index = get_highest_layer(default_layer_state);
 
     for (uint8_t i = 0; i < 4; i++) {
-        if (i == default_layer_index) {
-            hsv = (HSV) { HSV_CYAN };
-        } else if (i > 0 && layer_state_is(i)) {
+        if (layer_state_is(1)) {
+            // Function layer
+            hsv = (HSV) { HSV_CORAL };
+        } else if ((i > 1 && layer_state_is(i)) || default_layer_index > 0) {
+            // Windows layer
             hsv = (HSV) { HSV_RED };
         } else {
             hsv = (HSV) { HSV_OFF };
         }
-
-        RGB rgb = hsv_to_rgb(hsv);
-        rgb_matrix_set_color(i + 1, rgb.r, rgb.g, rgb.b);
     }
+
+    uint8_t caps_lock_led = 49; // see iso_encoder.c
+    RGB rgb = hsv_to_rgb(hsv);
+    rgb_matrix_set_color(caps_lock_led, rgb.r, rgb.g, rgb.b);
 
     return false;
 }
